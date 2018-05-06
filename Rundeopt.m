@@ -7,7 +7,7 @@
 		F_VTR = 0.00001; 
 
 % I_D		number of parameters of the objective function 
-		I_D = 13; 
+		I_D = 8; 
 
 % FVr_minbound,FVr_maxbound   vector of lower and bounds of initial population
 %    		the algorithm seems to work especially well if [FVr_minbound,FVr_maxbound] 
@@ -47,7 +47,7 @@
 %                      Alternates between differential mutation and three-point-
 %                      recombination.           
 
-		I_strategy = 3
+		I_strategy = 3;
 
 % I_refresh     intermediate output will be produced after "I_refresh"
 %               iterations. No intermediate output will be produced
@@ -62,6 +62,8 @@
 % defined here. Otherwise we have to redefine them again and again in the
 % cost function or pass a large amount of parameters values.
 %***************************************************************************
+
+%********what is this?*********
 
 %-----bound at x-value +/- 1.2--------------------------------------------
 FVr_bound =[0,1.2,1.88,3.119,6.06879,...
@@ -112,5 +114,5 @@ end
 % Start of optimization
 %********************************************************************
 
-[FVr_x,S_y,I_nf] = deopt('objfun',S_struct)
+[FVr_x,S_y,I_nf] = deopt('optionpriceopt',S_struct)
 

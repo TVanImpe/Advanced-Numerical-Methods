@@ -44,6 +44,9 @@ put=1; % the input if we want a put option
 t0=0; %initial date
 T=1; %maturity
 
+% find c
+
+c=optionpriceCOSFFT(N,S0,K,r,lambda,eta,u,u0,rho,T,t0,mu,put);
 %% c_hat for different parameters
 
 FVr_temp(1)=r;
@@ -55,15 +58,9 @@ FVr_temp(6)=u0;
 FVr_temp(7)=rho;
 FVr_temp(8)=mu;
 
-S_MSE.FVr_oa(1) = c_hat(N,vectorS0,K,r,lambda,eta,u,u0,rho,T,t0,mu,put);
+chat = c_hat(N,vectorS0,K,r,lambda,eta,u,u0,rho,T,t0,mu,put);
+%S_MSE.FVr_oa(1) = v;
+S_MSE.FVr_oa(1)=(c-chat)^2;
 S_MSE.I_nc      = 0;%no constraints
 S_MSE.FVr_ca    = 0;%no constraint array
 S_MSE.I_no      = 1;%number of objectives (costs)
-
-%{
-1) calculate reference option prices - use COS-FFT
-2) write/ include a function that calculates option prices for parameters
---> rewrite COS-FFT sucht that the input are theta and X_i
-3) write objective function: (c-c^/hat)^2
-4) implement differential evolution
-%}

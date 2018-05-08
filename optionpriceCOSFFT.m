@@ -18,10 +18,12 @@ put, an indicator for whether the option is a put (put==1) or a call
 
 Outputs produced are:
 v, the price of the option; a scalar
+phi_hes, the characteristic function; a (1xN) vector
 omega, needed for plotting; a (1xN) vector
+Uk, needed for further calculations; a (1xN) vector
 %}
 
-function v=c_hat(N,S0,K,r,lambda,eta,u,u0,rho,T,t0,mu,put)
+function [v]=optionpriceCOSFFT(N,S0,K,r,lambda,eta,u,u0,rho,T,t0,mu,put)
 
 %% Calculated inputs
 
@@ -106,10 +108,8 @@ phi_hes(1)=phi_hes(1)/2; %apply the formula for k=0 here
 
 % 2) calculate the function for all x in the vector range, according to
 % formula 34
-%{
+
 range=a:0.01:b; %setting up the output
 allk=0:N-1;
-longSum = phi_hes.*Uk.*exp((x-a)/(b-a)*1i*pi.*allk); %an intermediate step in the formula
-v = K.*exp(-r*dt).*real(sum(longSum));
-%}
-v=15;
+longSum = phi_hes.*Uk.*exp((x-a)/(b-a)*1i*pi*allk); %an intermediate step in the formula
+v = K*exp(-r*dt)*real(sum(longSum));
